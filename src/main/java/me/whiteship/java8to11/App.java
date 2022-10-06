@@ -1,23 +1,24 @@
 package me.whiteship.java8to11;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.*;
-import java.util.function.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class App {
 
     public static void main(String[] arg) throws InterruptedException {
-        Instant instant = Instant.now();
-        System.out.println(instant); // 기준시 UTC
-        System.out.println(instant.atZone(ZoneId.of("UTC"))); // 기준시 UTC
+        LocalDateTime now = LocalDateTime.now();
+        System.out.println(now);
+        LocalDateTime birthDay =
+            LocalDateTime.of(1982,8,26,0,0,0);
 
-        ZoneId zone = ZoneId.systemDefault();
-        System.out.println(zone);
-        ZonedDateTime zonedDateTime = instant.atZone(zone);
+        ZonedDateTime nowInKorea = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
+        System.out.println(nowInKorea);
+
+        Instant nowInstant = Instant.now();
+        ZonedDateTime zonedDateTime = nowInstant.atZone(ZoneId.of("Asia/Seoul"));
         System.out.println(zonedDateTime);
+        zonedDateTime.toInstant();
     }
 }
