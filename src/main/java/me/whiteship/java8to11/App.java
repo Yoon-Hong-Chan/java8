@@ -1,24 +1,29 @@
 package me.whiteship.java8to11;
 
+import java.time.Duration;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.Period;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 
 public class App {
 
     public static void main(String[] arg) throws InterruptedException {
-        LocalDateTime now = LocalDateTime.now();
-        System.out.println(now);
-        LocalDateTime birthDay =
-            LocalDateTime.of(1982,8,26,0,0,0);
+        LocalDate today = LocalDate.now();
+        LocalDate thisYearBirthDay = LocalDate.of(2022, 9,1);
 
-        ZonedDateTime nowInKorea = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
-        System.out.println(nowInKorea);
+        Period period = Period.between(today,thisYearBirthDay);
+        System.out.println(period.getMonths());
+        System.out.println(period.getDays());
 
-        Instant nowInstant = Instant.now();
-        ZonedDateTime zonedDateTime = nowInstant.atZone(ZoneId.of("Asia/Seoul"));
-        System.out.println(zonedDateTime);
-        zonedDateTime.toInstant();
+        Instant now = Instant.now();
+        Instant plus = now.plus(10, ChronoUnit.SECONDS);
+        Duration between = Duration.between(now,plus);
+        System.out.println(between.getSeconds());
+
     }
 }
