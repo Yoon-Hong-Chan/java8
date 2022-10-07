@@ -1,38 +1,30 @@
 package me.whiteship.java8to11;
 
-import java.time.Duration;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.Month;
-import java.time.Period;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.TimeZone;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class App {
 
-    public static void main(String[] arg) throws InterruptedException {
-        LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter MMddyyyy = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-        System.out.println(now.format(MMddyyyy));
+    public static void main(String[] arg){
+        ExecutorService executorService = Executors.newFixedThreadPool(2);
+        Callable<String> hello = ()-> {
+            Thread.sleep(2000L);
+            return "hellow";
+        };
 
-        LocalDate parse = LocalDate.parse("07/15/1982",MMddyyyy);
-        System.out.println(parse);
+        Future<String> submit = executorService.submit(hello);
+        System.out.println(submit.isDone());
+        System.out.println("Started!");
+        submit.cancel(true);
+//        submit.get(); // 블락킹 콜
+        System.out.println(submit.isDone());
+        System.out.println("End!!");
+        executorService.shutdown();
+    }
 
-        Date date = new Date();
-        Instant instant = date.toInstant();
-        Date newDate = Date.from(instant);
-
-        GregorianCalendar gregorianCalendar = new GregorianCalendar();
-        ZonedDateTime dateTime = gregorianCalendar.toInstant().atZone(ZoneId.systemDefault());
-        GregorianCalendar from = GregorianCalendar.from(dateTime);
-
-        ZoneId zoneId = TimeZone.getTimeZone("PST").toZoneId();
-
+    private static Runnable getRunnable(String msg){
+        return ()-> System.out.println(msg + Thread.currentThread().getName());
     }
 }
