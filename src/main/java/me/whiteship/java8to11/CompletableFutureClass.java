@@ -21,13 +21,12 @@ public class CompletableFutureClass {
             System.out.println("Hello3 "+ Thread.currentThread().getName());
             return "hello3";
         }).thenRun(() -> {
-            System.out.println("End future2 ");
+            System.out.println("End future2");
         });
 
         System.out.println("Start");
         System.out.println("result :" + future.get());
         future2.get();
         System.out.println("End");
-
     }
 }
