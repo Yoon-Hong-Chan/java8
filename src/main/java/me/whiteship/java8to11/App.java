@@ -11,6 +11,7 @@ import java.util.concurrent.Future;
 public class App {
 
     public static void main(String[] arg) throws ExecutionException, InterruptedException {
-        CompletableFutureClass.run();
+//        CompletableFutureClass.run();
+        ParallelSort.run();
     }
 }

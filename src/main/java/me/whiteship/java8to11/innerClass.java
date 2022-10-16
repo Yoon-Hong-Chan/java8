@@ -17,7 +17,7 @@ public class innerClass {
     public class ZipAddress {
         String address1;
         String address2;
-        static  String aa = "b";
+         String aa = "b";
         public void printName(){
         }
     }
